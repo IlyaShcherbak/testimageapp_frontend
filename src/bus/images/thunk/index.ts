@@ -7,6 +7,7 @@ import { useDispatch } from '../../../tools/hooks';
 // Thunk
 import { fetchImages } from './fetchImages';
 import { postImages } from './postImages';
+import { deleteImage } from './deleteImage';
 
 // Types
 import * as types from '../types';
@@ -23,6 +24,9 @@ export const extraReducers = (builder: ActionReducerMapBuilder<types.ImagesState
             }
 
             return [ ...action.payload, ...state ];
+        })
+        .addCase(deleteImage.fulfilled, (/* state => */__, action) => {
+            // return action.payload;
         });
 };
 
@@ -33,5 +37,10 @@ export const useImagesThunk = () => {
     return {
         fetchImages: () => void dispatch(fetchImages()),
         postImages:  (formData: FormData) => void dispatch(postImages(formData)),
+        deleteImage: (id: string) => {
+            return dispatch(deleteImage(id)).then(() => {
+                dispatch(fetchImages());
+            });
+        },
     };
 };

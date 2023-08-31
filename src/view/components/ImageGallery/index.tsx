@@ -13,18 +13,24 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 // Types
-import { Images, Image } from '../../../bus/images/types';
+import { Image, Images } from '../../../bus/images/types';
 
 // PropTypes
 type PropTypes = {
-    data: any; // Images
+    data: Images;
+    deleteImage: (id:string) => void;
 }
 
-export const ImageGallery: FC<PropTypes> = ({ data }) => {
+export const ImageGallery: FC<PropTypes> = ({ data, deleteImage }) => {
     const FavImage = (item: Image) => {
         item.isFavourite = !item.isFavourite;
-        console.log('click', item._id);
+        console.log('fav', item._id);
     };
+
+    const DelImage = (item: Image) => {
+        deleteImage(item.public_id);
+    };
+
 
     return (
         <ImageList sx = {{
@@ -43,25 +49,28 @@ export const ImageGallery: FC<PropTypes> = ({ data }) => {
                                 <IconButton
                                     aria-label = { `info about ${item.title}` }
                                     sx = {{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                    onClick = { () => { console.log('delete', item._id); } }>
+                                    onClick = { () => {
+                                        DelImage(item);
+                                    } }>
                                     <DeleteOutlineOutlinedIcon sx = {{ color: 'white' }} />
-                                </IconButton>
-                                <IconButton
-                                    aria-label = { `info about ${item.title}` }
-                                    sx = {{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                    onClick = { () => { FavImage(item); } }>
-                                    <StarBorderOutlinedIcon sx = { item.isFavourite ? { color: 'yellow' } : { color: 'white' } } />
                                 </IconButton>
 
                                 <IconButton
                                     aria-label = { `info about ${item.title}` }
                                     sx = {{ color: 'rgba(255, 255, 255, 0.54)' }}
                                     onClick = { () => { FavImage(item); } }>
+                                    <StarBorderOutlinedIcon style = { item.isFavourite ? { color: 'yellow' } : { color: 'white' } } />
+                                </IconButton>
+
+                                <IconButton
+                                    aria-label = { `info about ${item.title}` }
+                                    sx = {{ color: 'rgba(255, 255, 255, 0.54)' }}
+                                    onClick = { () => { console.log('info', item); } }>
                                     <InfoIcon sx = {{ color: 'white' }} />
                                 </IconButton>
                             </>
                         }
-                        title = { item.title ? item.title : 'Image Title' }
+                        title = { item.title ? item.title : 'Title' }
                     />
                 </ImageListItem>
             ))}

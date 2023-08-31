@@ -13,11 +13,14 @@ import { ErrorBoundary, ImageGallery } from '../../components';
 // Styles
 import { Container } from './styles';
 
+// Types
+import { Images } from '../../../bus/images/types';
+
 // Constants
 const types: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];
 
 const Root: FC = () => {
-    const { images, postImages } = useImages();
+    const { images, postImages, deleteImage } = useImages();
 
     const onChange = (event: any) => {
         const errors: Array<string> = [];
@@ -43,7 +46,7 @@ const Root: FC = () => {
         postImages(formData);
     };
 
-    console.log(images);
+    console.log('images', images);
 
     return (
         <Container>
@@ -53,7 +56,10 @@ const Root: FC = () => {
                 type = 'file'
                 onChange = { onChange }
             />
-            <ImageGallery data = { images }/>
+            <ImageGallery
+                data = { images as Images }
+                deleteImage = { deleteImage }
+            />
         </Container>
     );
 };
