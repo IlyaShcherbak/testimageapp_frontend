@@ -5,13 +5,14 @@ import React, { FC } from 'react';
 import { useImages } from '../../../bus/images';
 
 // Components
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, ImageGallery } from '../../components';
 
 // Elements
-import { HelloBurst } from '../../elements';
+// import { HelloBurst } from '../../elements';
 
 // Styles
 import { Container } from './styles';
+
 // Constants
 const types: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];
 
@@ -46,12 +47,13 @@ const Root: FC = () => {
 
     return (
         <Container>
-            <HelloBurst />
+            {/* <HelloBurst /> */}
             <input
                 multiple
                 type = 'file'
                 onChange = { onChange }
             />
+            <ImageGallery data = { images }/>
         </Container>
     );
 };

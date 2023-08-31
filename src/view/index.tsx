@@ -14,7 +14,7 @@ import { GlobalStyles, defaultTheme } from '../assets';
 // Styles
 export const AppContainer = styled.div`
     height: 100vh;
-    width: 100vw;
+    width: 98vw;
 `;
 
 export const App: FC = () => {
