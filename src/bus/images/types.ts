@@ -7,6 +7,10 @@ export type Image = {
     isFavourite: boolean;
 }
 
+export interface UpdateImage extends Pick<Image, '_id'> {
+    formData: FormData;
+}
+
 export type Images = Array<Image>
 
 export type ImagesState = Images | null

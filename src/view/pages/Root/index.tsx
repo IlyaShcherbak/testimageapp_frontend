@@ -7,14 +7,9 @@ import { useImages } from '../../../bus/images';
 // Components
 import { ErrorBoundary, ImageGallery } from '../../components';
 
-// Elements
-// import { HelloBurst } from '../../elements';
-
 // Styles
 import { Container } from './styles';
-
-// Types
-import { Images } from '../../../bus/images/types';
+import { Button, Box } from '@mui/material';
 
 // Constants
 const types: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];
@@ -46,18 +41,48 @@ const Root: FC = () => {
         postImages(formData);
     };
 
-    console.log('images', images);
+    if (images && images[ 0 ] === null) {
+        return <div>No Data</div>;
+    }
 
     return (
         <Container>
-            {/* <HelloBurst /> */}
-            <input
-                multiple
-                type = 'file'
-                onChange = { onChange }
-            />
+            <Box sx = {{
+                position: 'fixed',
+                top:      '85%',
+                left:     '90%',
+                zIndex:   999,
+            }}>
+                <Button
+                    style = {{
+                        position:      'relative',
+                        fontSize:      '20px',
+                        textTransform: 'uppercase',
+                    }}
+                    variant = 'contained'>
+                    <input
+                        multiple
+                        style = {{
+                            position:     'absolute',
+                            opacity:      0,
+                            width:        '100%',
+                            height:       '100%',
+                            top:          0,
+                            bottom:       0,
+                            left:         0,
+                            right:        0,
+                            marginBottom: 30,
+                        }}
+                        type = 'file'
+                        onChange = { onChange }
+                    />
+
+                    Add Image
+                </Button>
+            </Box>
+
             <ImageGallery
-                data = { images as Images }
+                data = { images }
                 deleteImage = { deleteImage }
             />
         </Container>

@@ -8,6 +8,7 @@ import { useDispatch } from '../../../tools/hooks';
 import { fetchImages } from './fetchImages';
 import { postImages } from './postImages';
 import { deleteImage } from './deleteImage';
+import { updateImage } from './updateImage';
 
 // Types
 import * as types from '../types';
@@ -25,9 +26,12 @@ export const extraReducers = (builder: ActionReducerMapBuilder<types.ImagesState
 
             return [ ...action.payload, ...state ];
         })
-        .addCase(deleteImage.fulfilled, (/* state => */__, action) => {
+        .addCase(deleteImage.fulfilled, () => {
             // return action.payload;
         });
+    // .addCase(updateImage.fulfilled, () => {
+    //     // return action.payload;
+    // });
 };
 
 // Hook
@@ -39,6 +43,11 @@ export const useImagesThunk = () => {
         postImages:  (formData: FormData) => void dispatch(postImages(formData)),
         deleteImage: (id: string) => {
             return dispatch(deleteImage(id)).then(() => {
+                dispatch(fetchImages());
+            });
+        },
+        updateImage: (payload: types.UpdateImage) => {
+            return void dispatch(updateImage(payload)).then(() => {
                 dispatch(fetchImages());
             });
         },

@@ -8,7 +8,7 @@ import { useImagesThunk } from './thunk';
 
 export const useImages = () => {
     // MarkerGen api hook
-    const { fetchImages, postImages, deleteImage } = useImagesThunk();  /* Thunk api hook */
+    const { fetchImages, postImages, deleteImage, updateImage } = useImagesThunk();  /* Thunk api hook */
 
     const images = useSelector((state) => state.images);
 
@@ -18,6 +18,7 @@ export const useImages = () => {
 
     return {
         images,
+        updateImage,
         postImages,
         deleteImage,
     };
