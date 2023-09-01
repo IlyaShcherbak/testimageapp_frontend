@@ -25,13 +25,7 @@ export const extraReducers = (builder: ActionReducerMapBuilder<types.ImagesState
             }
 
             return [ ...action.payload, ...state ];
-        })
-        .addCase(deleteImage.fulfilled, () => {
-            // return action.payload;
         });
-    // .addCase(updateImage.fulfilled, () => {
-    //     // return action.payload;
-    // });
 };
 
 // Hook

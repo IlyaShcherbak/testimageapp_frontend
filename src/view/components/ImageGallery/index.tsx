@@ -1,5 +1,6 @@
 // Core
-import React, { FC, useCallback, useState } from 'react';
+import { FC, useState } from 'react';
+import debounce from 'lodash.debounce';
 
 // Bus
 import { useTogglesRedux } from '../../../bus/client/toggles';
@@ -32,12 +33,11 @@ export const ImageGallery: FC<PropTypes> = ({ data, deleteImage }) => {
 
     const [ selectedImage, setSelectedImage ] = useState<Image | null>(null);
 
-    const FavImage = useCallback((item: Image) => {
+    const FavImage = (item: Image) => {
         const newItem = {
             ...item,
             isFavourite: item.isFavourite ? !item.isFavourite : true,
         };
-        console.log('item.isFavourite >>> ', item.isFavourite);
 
         let formData = new FormData();
         if (newItem) {
@@ -53,14 +53,13 @@ export const ImageGallery: FC<PropTypes> = ({ data, deleteImage }) => {
                 formData,
             });
         }
-    }, []);
-
-    const DelImage = (item: Image) => {
-        deleteImage(item.public_id);
     };
 
+    const debounceFavImage = debounce(FavImage, 1000);
+
+    const debounceDelImage = debounce(deleteImage, 1000);
+
     const ShowInfo = (item: Image) => {
-        console.log('info', item);
         setSelectedImage(item);
         setToggleAction({
             type:  'isImageInfoModalOpen',
@@ -89,16 +88,14 @@ export const ImageGallery: FC<PropTypes> = ({ data, deleteImage }) => {
                                 <IconButton
                                     aria-label = { `info about ${item.title}` }
                                     sx = {{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                    onClick = { () => {
-                                        DelImage(item);
-                                    } }>
+                                    onClick = { () => debounceDelImage(item.public_id)  }>
                                     <DeleteOutlineOutlinedIcon sx = {{ color: 'white' }} />
                                 </IconButton>
 
                                 <IconButton
                                     aria-label = { `info about ${item.title}` }
                                     sx = {{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                    onClick = { () => { FavImage(item); } }>
+                                    onClick = { () => { debounceFavImage(item); } }>
                                     <StarBorderOutlinedIcon style = { item.isFavourite ? { color: 'yellow' } : { color: 'white' } } />
                                 </IconButton>
 
@@ -110,7 +107,7 @@ export const ImageGallery: FC<PropTypes> = ({ data, deleteImage }) => {
                                 </IconButton>
                             </>
                         }
-                        title = { item.title ? item.title : 'Title' }
+                        title = { item.title ? item.title : 'Default Title' }
                     />
                 </ImageListItem>
             ))}

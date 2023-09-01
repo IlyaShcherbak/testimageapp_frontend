@@ -13,7 +13,7 @@ import * as types from '../types';
 // Action
 const deleteImageAction = createAction('images/DELETE_IMAGE');
 
-export const deleteImage = createAsyncThunk<types.Images, /* payload type => */ string>(
+export const deleteImage = createAsyncThunk<types.Images, string>(
     deleteImageAction.type,
     async (payload) => {
         const result = await customFetch<types.Images>({
@@ -23,7 +23,6 @@ export const deleteImage = createAsyncThunk<types.Images, /* payload type => */ 
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                // body:   payload,
             }),
         });
 

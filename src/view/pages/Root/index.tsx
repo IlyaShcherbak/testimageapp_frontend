@@ -6,10 +6,10 @@ import { useImages } from '../../../bus/images';
 
 // Components
 import { ErrorBoundary, ImageGallery } from '../../components';
+import { Button, Box, Typography } from '@mui/material';
 
 // Styles
 import { Container } from './styles';
-import { Button, Box } from '@mui/material';
 
 // Constants
 const types: Array<string> = [ 'image/png', 'image/jpeg', 'image/gif' ];
@@ -47,6 +47,13 @@ const Root: FC = () => {
 
     return (
         <Container>
+            <Typography
+                align = 'center'
+                component = 'h1'
+                fontSize = { 40 }
+                variant = 'h1'>
+                Image Gallery
+            </Typography>;
             <Box sx = {{
                 position: 'fixed',
                 top:      '85%',

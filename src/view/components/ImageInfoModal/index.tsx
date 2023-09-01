@@ -24,7 +24,7 @@ export const ImageInfoModal: FC<PropTypes> = ({ image }) => {
 
     const onCloseHandler = useCallback(() => {
         let formData = new FormData();
-        console.log('currentImage >>> ', currentImage);
+
         if (currentImage) {
             const keysCurrentImage = Object.keys(currentImage);
             const valuesCurrentImage = Object.values(currentImage);
@@ -44,6 +44,7 @@ export const ImageInfoModal: FC<PropTypes> = ({ image }) => {
         });
     }, [ setToggleAction, currentImage ]);
 
+
     return (
         <Dialog
             open = { isImageInfoModalOpen }
@@ -60,6 +61,7 @@ export const ImageInfoModal: FC<PropTypes> = ({ image }) => {
                         defaultValue = { image.title }
                         id = 'outlined-basic'
                         label = 'Title'
+                        margin = 'dense'
                         variant = 'outlined'
                         onChange = { (event) => setCurrentImage((prevState) => prevState && {
                             ...prevState,
@@ -71,6 +73,7 @@ export const ImageInfoModal: FC<PropTypes> = ({ image }) => {
                         defaultValue = { image.imageUrl }
                         id = 'outlined-basic'
                         label = 'Source'
+                        margin = 'dense'
                         variant = 'outlined'
                     />
                 </Stack>
